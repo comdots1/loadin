@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://loadin.pages.dev/sitemap.xml
