@@ -1,6 +1,6 @@
 <div align="center">
 
-# ✦ Loadin — High-Performance Native Download Accelerator
+# [✦ Loadin — High-Performance Native Download Accelerator](https://loadin.mooni.uk)
 
 <p align="center">
   <strong>Next-Generation Windows Download Manager built with Pure Go 1.23 & Native Win32 Subsystems</strong><br>
@@ -19,7 +19,7 @@
 
 ---
 
-## 🌟 개요 (Overview)
+## Overview
 
 **Loadin**은 고성능 시스템 프로그래밍 언어인 **Go 1.23**과 **Windows 네이티브 Win32/C# 서브시스템**으로 설계된 상용 소프트웨어급 초고속 다운로드 가속 엔진입니다.
 
@@ -27,7 +27,7 @@
 
 ---
 
-## ⚡ 핵심 아키텍처 및 엔지니어링 특징
+## 아키텍처 및 엔지니어링
 
 ### 1. 동적 세그먼트 워크 스틸링 (Dynamic Work-Stealing Segmentation)
 - 고정 분할 방식의 한계를 극복하기 위해 **실시간 세그먼트 분할(Atomic Work-Stealing)** 알고리즘을 탑재했습니다.
@@ -69,7 +69,7 @@
 
 ---
 
-## 🖥️ UI 디자인 & 사용성
+## 디자인 & 사용성
 
 | 영역 | 기능 설명 |
 | :--- | :--- |
@@ -80,7 +80,7 @@
 
 ---
 
-## 📁 프로젝트 디렉터리 구조
+## 디렉터리 구조
 
 ```text
 beautiful-euclid/
@@ -93,11 +93,6 @@ beautiful-euclid/
 │   └── server/           # 임베디드 웹뷰 서버, SSE 스트림, 브라우저 인터셉터
 │       └── ui/           # 공간형 인터페이스, 커스텀 벡터 아이콘, i18n
 ├── browser-extension/    # Chrome/Edge 브라우저 확장프로그램 (Manifest V3)
-├── Web/                  # 공식 랜딩 & 다운로드 사이트 (Cloudflare Pages 배포용)
-│   ├── assets/           # CSS, JS(시뮬레이터, 사양 감지기), 고화질 SVG/PNG/OG 이미지
-│   ├── downloads/        # LoadinSetup.exe, Loadin.exe, 확장프로그램 ZIP 실 배포본
-│   ├── _headers          # Cloudflare Pages 보안 & 다운로드 MIME 캐시 헤더
-│   └── index.html        # Spatial Glassmorphism 공식 웹사이트
 ├── build.ps1             # 아이콘 생성, 호버 창, 엔진, 인스톨러 원클릭 빌드 스크립트
 ├── main.go               # Loadin 진입점, 싱글 인스턴스 핸들러, 시스템 트레이 구동
 ├── Loadin.exe            # 메인 실행 파일 (포터블 지원)
@@ -106,10 +101,10 @@ beautiful-euclid/
 
 ---
 
-## 🚀 빠른 시작 (Quick Start)
+## Quick Start
 
 ### 1. 설치 프로그램을 통한 설치 (권장)
-[LoadinSetup.exe](file:///c:/Users/Comdots/Documents/antigravity/beautiful-euclid/LoadinSetup.exe)를 실행하여 원하는 설치 옵션을 선택하고 원클릭으로 설치를 완료합니다.
+LoadinSetup.exe를 실행하여 원하는 설치 옵션을 선택하고 원클릭으로 설치를 완료합니다.
 
 ### 2. 포터블 직접 실행
 ```powershell
@@ -124,7 +119,7 @@ beautiful-euclid/
 ```
 
 ### 3. 소스코드 전체 빌드
-PowerShell 환경에서 [build.ps1](file:///c:/Users/Comdots/Documents/antigravity/beautiful-euclid/build.ps1)을 실행하면 아이콘 생성, C# 서브시스템, Go 엔진, 설치 마법사가 순서대로 자동 빌드됩니다.
+PowerShell 환경에서 build.ps1을 실행하면 아이콘 생성, C# 서브시스템, Go 엔진, 설치 마법사가 순서대로 자동 빌드됩니다.
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\build.ps1
 ```
@@ -133,18 +128,6 @@ powershell -ExecutionPolicy Bypass -File .\build.ps1
 ```powershell
 go test -v ./internal/engine
 ```
-
-### 5. 공식 웹사이트 배포 (Cloudflare Pages)
-`Web/` 디렉터리는 추가 빌드 도구 없이 즉시 Cloudflare Pages에 올릴 수 있도록 완벽하게 구성되어 있습니다.
-```bash
-# Wrangler CLI로 직접 1초 배포 시
-npx wrangler pages deploy Web --project-name=loadin
-```
-또는 GitHub 리포지토리 연동 시:
-- **Build output directory**: `Web`
-- **Root directory**: `/` (기본값)
-- **Build command**: (비워둠)
-
 ---
 
 ## 🛠️ 기술 스택 (Tech Stack)
