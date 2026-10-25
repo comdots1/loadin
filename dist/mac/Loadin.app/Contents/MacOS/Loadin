@@ -1,0 +1,10 @@
+#!/bin/bash
+DIR="$(cd "$(dirname "$0")" && pwd)"
+ARCH="$(uname -m)"
+if [ "$ARCH" = "arm64" ]; then
+    chmod +x "$DIR/Loadin_arm64" 2>/dev/null
+    exec "$DIR/Loadin_arm64" "$@"
+else
+    chmod +x "$DIR/Loadin_amd64" 2>/dev/null
+    exec "$DIR/Loadin_amd64" "$@"
+fi

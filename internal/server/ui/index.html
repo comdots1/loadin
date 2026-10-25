@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="black">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Loadin</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+  <script>
+    (function() {
+      try {
+        var savedTheme = localStorage.getItem("loadin_theme");
+        if (savedTheme === "white" || savedTheme === "black") {
+          document.documentElement.setAttribute("data-theme", savedTheme);
+        } else {
+          document.documentElement.setAttribute("data-theme", "black");
+        }
+      } catch (_) {}
+    })();
+  </script>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <!-- Custom Vector SVG Icon Sprite -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="ic-bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+    </symbol>
+    <symbol id="ic-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16"/>
+    </symbol>
+    <symbol id="ic-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+    </symbol>
+    <symbol id="ic-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="3" width="7" height="7" rx="1.8"/><rect x="14" y="3" width="7" height="7" rx="1.8"/>
+      <rect x="14" y="14" width="7" height="7" rx="1.8"/><rect x="3" y="14" width="7" height="7" rx="1.8"/>
+    </symbol>
+    <symbol id="ic-activity" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="9"/><path d="M12 8v8m0 0l-3-3m3 3l3-3"/>
+    </symbol>
+    <symbol id="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 6L9 17l-5-5"/>
+    </symbol>
+    <symbol id="ic-pause" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/>
+    </symbol>
+    <symbol id="ic-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="6 4 20 12 6 20 6 4"/>
+    </symbol>
+    <symbol id="ic-archive" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 8v13H3V8"/><rect x="1" y="3" width="22" height="5" rx="1.5"/><line x1="10" y1="12" x2="14" y2="12"/>
+    </symbol>
+    <symbol id="ic-cpu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="4" y="4" width="16" height="16" rx="3"/><rect x="9" y="9" width="6" height="6" rx="1"/>
+    </symbol>
+    <symbol id="ic-video" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="4" width="20" height="16" rx="3"/><polygon points="10 9 15 12 10 15 10 9"/>
+    </symbol>
+    <symbol id="ic-music" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
+    </symbol>
+    <symbol id="ic-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/>
+    </symbol>
+    <symbol id="ic-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/>
+    </symbol>
+    <symbol id="ic-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="7.5"/><path d="M20 20l-3.8-3.8"/>
+    </symbol>
+    <symbol id="ic-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/>
+      <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>
+    </symbol>
+    <symbol id="ic-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="9.5"/><line x1="2.5" y1="12" x2="21.5" y2="12"/>
+      <path d="M12 2.5a14.5 14.5 0 013.8 9.5 14.5 14.5 0 01-3.8 9.5 14.5 14.5 0 01-3.8-9.5 14.5 14.5 0 013.8-9.5z"/>
+    </symbol>
+    <symbol id="ic-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="12 3 3 7.5 12 12 21 7.5 12 3"/><polyline points="3 16.5 12 21 21 16.5"/><polyline points="3 12 12 16.5 21 12"/>
+    </symbol>
+    <symbol id="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+    </symbol>
+    <symbol id="ic-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/>
+    </symbol>
+    <symbol id="ic-theme" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+    </symbol>
+    <symbol id="ic-settings" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="3"/>
+      <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>
+    </symbol>
+    <symbol id="ic-external" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+    </symbol>
+    <symbol id="ic-win-close" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+      <line x1="4" y1="4" x2="12" y2="12"/><line x1="12" y1="4" x2="4" y2="12"/>
+    </symbol>
+  </svg>
+
+  <div class="app-shell">
+    <!-- Left Translucent Sidebar -->
+    <aside class="glass-sidebar">
+      <div class="brand-header">
+        <div class="brand-logo">
+          <div class="logo-squircle">
+            <svg viewBox="0 0 20 20" fill="none" class="logo-svg">
+              <path d="M10 3.5v10m0 0l-3.8-3.8M10 13.5l3.8-3.8M4.5 16.5h11" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="brand-name">Loadin</span>
+        </div>
+      </div>
+
+      <!-- Status Filters -->
+      <div class="nav-section">
+        <div class="nav-label" data-i18n="nav.downloads">다운로드</div>
+        <button class="nav-item active" data-filter="all">
+          <svg class="svg-ic"><use href="#ic-grid"/></svg>
+          <span class="nav-text" data-i18n="nav.all">전체 항목</span>
+          <span class="nav-badge tabular" id="count-all">0</span>
+        </button>
+        <button class="nav-item" data-filter="active">
+          <svg class="svg-ic"><use href="#ic-activity"/></svg>
+          <span class="nav-text" data-i18n="nav.active">진행 중</span>
+          <span class="nav-badge tabular" id="count-active">0</span>
+        </button>
+        <button class="nav-item" data-filter="completed">
+          <svg class="svg-ic"><use href="#ic-check"/></svg>
+          <span class="nav-text" data-i18n="nav.completed">완료됨</span>
+          <span class="nav-badge tabular" id="count-completed">0</span>
+        </button>
+        <button class="nav-item" data-filter="paused">
+          <svg class="svg-ic"><use href="#ic-pause"/></svg>
+          <span class="nav-text" data-i18n="nav.paused">일시정지</span>
+          <span class="nav-badge tabular" id="count-paused">0</span>
+        </button>
+      </div>
+
+      <!-- Categories -->
+      <div class="nav-section">
+        <div class="nav-label" data-i18n="nav.categories">카테고리</div>
+        <button class="nav-item" data-filter="cat:compressed">
+          <svg class="svg-ic"><use href="#ic-archive"/></svg>
+          <span class="nav-text" data-i18n="nav.compressed">압축 파일</span>
+          <span class="nav-badge tabular" id="count-compressed">0</span>
+        </button>
+        <button class="nav-item" data-filter="cat:programs">
+          <svg class="svg-ic"><use href="#ic-cpu"/></svg>
+          <span class="nav-text" data-i18n="nav.programs">프로그램</span>
+          <span class="nav-badge tabular" id="count-programs">0</span>
+        </button>
+        <button class="nav-item" data-filter="cat:videos">
+          <svg class="svg-ic"><use href="#ic-video"/></svg>
+          <span class="nav-text" data-i18n="nav.videos">동영상</span>
+          <span class="nav-badge tabular" id="count-videos">0</span>
+        </button>
+        <button class="nav-item" data-filter="cat:music">
+          <svg class="svg-ic"><use href="#ic-music"/></svg>
+          <span class="nav-text" data-i18n="nav.music">오디오</span>
+          <span class="nav-badge tabular" id="count-music">0</span>
+        </button>
+        <button class="nav-item" data-filter="cat:documents">
+          <svg class="svg-ic"><use href="#ic-file"/></svg>
+          <span class="nav-text" data-i18n="nav.documents">문서</span>
+          <span class="nav-badge tabular" id="count-documents">0</span>
+        </button>
+      </div>
+
+      <!-- Quiet Bottom Status Area -->
+      <div class="sidebar-bottom">
+        <div class="sidebar-hw-card" id="sidebar-hw-card">
+          <div class="hw-top">
+            <span class="hw-title" data-i18n="hw.recommendedTitle">권장 병렬 연결</span>
+            <span class="hw-rec-pill tabular" id="hw-rec-badge">16 스레드</span>
+          </div>
+          <div class="hw-specs tabular" id="hw-specs-text">시스템 사양 확인 중...</div>
+        </div>
+
+        <div class="sidebar-telemetry-card">
+          <div class="telemetry-speed-row">
+            <span class="telemetry-speed tabular" id="global-speed-text">0.00 MB/s</span>
+            <span class="telemetry-workers tabular" id="global-workers-badge">0 스레드</span>
+          </div>
+          <span class="telemetry-peak hidden" id="global-peak-text"></span>
+          <canvas id="global-sparkline" width="210" height="28" class="hidden"></canvas>
+          <div class="speed-limiter-row">
+            <span data-i18n="telemetry.speedLimit">속도 제한</span>
+            <select id="quick-speed-limit" class="glass-select-sm">
+              <option value="0" data-i18n="telemetry.unlimited">무제한</option>
+              <option value="52428800">50 MB/s</option>
+              <option value="20971520">20 MB/s</option>
+              <option value="10485760">10 MB/s</option>
+              <option value="5242880">5 MB/s</option>
+              <option value="1048576">1 MB/s</option>
+            </select>
+          </div>
+          <div class="disk-row">
+            <div class="disk-top">
+              <span class="disk-drive tabular" id="disk-drive-label">저장 공간</span>
+              <button class="btn-text-link" id="btn-open-save-dir" data-i18n="telemetry.openFolder">폴더 열기</button>
+            </div>
+            <div class="disk-bar-track">
+              <div class="disk-bar-fill" id="disk-bar-fill" style="width: 30%"></div>
+            </div>
+            <div class="disk-meta tabular" id="disk-free-text">여유 공간 확인 중</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="glass-main">
+      <!-- Unified Top Toolbar -->
+      <header class="top-header">
+        <div class="search-box">
+          <svg class="svg-ic"><use href="#ic-search"/></svg>
+          <input type="text" id="search-input" data-i18n-placeholder="header.searchPlaceholder" placeholder="검색" autocomplete="off" />
+        </div>
+
+        <div class="header-actions">
+          <button class="glass-btn" id="btn-launch-hover-widget">
+            <svg class="svg-ic"><use href="#ic-plus"/></svg>
+            <span data-i18n="header.newDialog">새 다운로드 창</span>
+          </button>
+          <button class="glass-btn" id="btn-browser-modal">
+            <svg class="svg-ic"><use href="#ic-link"/></svg>
+            <span data-i18n="header.browserIntegration">브라우저 연동</span>
+          </button>
+          <button class="glass-btn" id="btn-sniffer-modal">
+            <svg class="svg-ic"><use href="#ic-globe"/></svg>
+            <span data-i18n="header.linkScan">링크 스캔</span>
+          </button>
+          <button class="glass-btn" id="btn-batch-modal">
+            <svg class="svg-ic"><use href="#ic-layers"/></svg>
+            <span data-i18n="header.batchAdd">일괄 추가</span>
+          </button>
+          <button class="glass-btn" id="btn-benchmark-modal">
+            <svg class="svg-ic"><use href="#ic-bolt"/></svg>
+            <span data-i18n="header.benchmark">테스트</span>
+          </button>
+          <div class="divider-v"></div>
+          <select id="header-lang-select" class="glass-select-sm" title="Language / 언어">
+            <option value="ko">한국어</option>
+            <option value="en">English</option>
+            <option value="ja">日本語</option>
+          </select>
+          <button class="glass-btn-icon" id="btn-resume-all" title="모두 시작">
+            <svg class="svg-ic"><use href="#ic-play"/></svg>
+          </button>
+          <button class="glass-btn-icon" id="btn-pause-all" title="모두 일시정지">
+            <svg class="svg-ic"><use href="#ic-pause"/></svg>
+          </button>
+          <button class="glass-btn-icon" id="btn-clear-completed" title="완료 항목 지우기">
+            <svg class="svg-ic"><use href="#ic-trash"/></svg>
+          </button>
+          <button class="glass-btn-icon" id="btn-theme-cycle" title="테마 전환 (블랙 / 화이트)">
+            <svg class="svg-ic"><use href="#ic-theme"/></svg>
+          </button>
+          <button class="glass-btn-icon" id="btn-settings-modal" title="환경설정">
+            <svg class="svg-ic"><use href="#ic-settings"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Clipboard Auto-Detected Banner -->
+      <div class="clipboard-banner hidden" id="clipboard-banner">
+        <div class="clipboard-banner-left">
+          <span class="clip-badge" data-i18n="clip.detected">복사된 링크</span>
+          <span class="clip-url tabular" id="clipboard-detected-url"></span>
+        </div>
+        <div class="clipboard-banner-actions">
+          <button class="glass-btn primary-glow btn-sm" id="btn-clip-download" data-i18n="composer.download">다운로드</button>
+          <button class="glass-btn btn-sm" id="btn-clip-dismiss" data-i18n="common.close">닫기</button>
+        </div>
+      </div>
+
+      <!-- Sleek Address Input Bar -->
+      <section class="composer-card">
+        <div class="composer-main-row">
+          <div class="url-input-wrapper">
+            <span class="url-protocol-badge hidden" id="probe-status-badge">URL</span>
+            <svg class="svg-ic url-lead-icon"><use href="#ic-link"/></svg>
+            <input
+              type="url"
+              id="url-input"
+              data-i18n-placeholder="composer.urlPlaceholder"
+              placeholder="다운로드할 파일 주소(URL)를 붙여넣으세요..."
+              autocomplete="off"
+              spellcheck="false"
+            />
+            <button class="btn-probe-inline" id="btn-probe-url" data-i18n="composer.probe">분석</button>
+          </div>
+          <button class="glass-btn" id="btn-toggle-advanced">
+            <span data-i18n="composer.options">옵션</span>
+            <span id="adv-chevron">▾</span>
+          </button>
+          <button class="glass-btn primary-glow" id="btn-add-download">
+            <span data-i18n="composer.download">다운로드</span>
+          </button>
+        </div>
+
+        <!-- Probed Metadata Summary Bar -->
+        <div class="probe-preview-bar hidden" id="probe-preview-bar">
+          <div class="probe-item">
+            <span class="probe-label" data-i18n="probe.file">파일</span>
+            <span class="probe-val" id="probe-filename">-</span>
+          </div>
+          <div class="probe-item">
+            <span class="probe-label" data-i18n="probe.size">크기</span>
+            <span class="probe-val tabular" id="probe-size">-</span>
+          </div>
+          <div class="probe-item">
+            <span class="probe-label" data-i18n="probe.mode">방식</span>
+            <span class="probe-badge-range" id="probe-range">-</span>
+          </div>
+          <div class="probe-item">
+            <span class="probe-label" data-i18n="probe.recommended">권장 설정</span>
+            <span class="probe-badge-rec tabular" id="probe-rec-threads">-</span>
+          </div>
+        </div>
+
+        <!-- Expandable Options Sheet -->
+        <div class="composer-advanced hidden" id="composer-advanced">
+          <div class="hw-recommend-banner">
+            <div class="hw-rec-left">
+              <span class="hw-rec-reason" id="adv-hw-reason">시스템 사양을 기반으로 최적의 병렬 스레드 수를 계산했습니다.</span>
+            </div>
+            <button type="button" class="glass-btn btn-sm" id="btn-apply-rec-threads">
+              <span data-i18n="composer.applyRecommended">권장값 적용</span> (<span id="btn-rec-count-label">16</span>)
+            </button>
+          </div>
+
+          <div class="adv-grid">
+            <div class="adv-field">
+              <label data-i18n="composer.fileName">파일 이름</label>
+              <input type="text" id="adv-filename" data-i18n-placeholder="composer.autoDetect" placeholder="자동 감지" class="glass-input" />
+            </div>
+            <div class="adv-field">
+              <label>
+                <span data-i18n="composer.parallelThreads">병렬 스레드</span>: <strong class="tabular" id="adv-conn-val">16</strong>
+                <span class="rec-inline-tag" id="adv-conn-rec-tag">사양 최적값</span>
+              </label>
+              <input type="range" id="adv-connections" min="1" max="32" value="16" class="glass-slider" />
+            </div>
+            <div class="adv-field">
+              <label data-i18n="composer.saveLocation">저장 위치</label>
+              <div class="input-with-btn">
+                <input type="text" id="adv-savedir" data-i18n-placeholder="composer.defaultFolder" placeholder="기본 다운로드 폴더" class="glass-input tabular" />
+                <button type="button" class="glass-btn btn-sm" id="btn-pick-adv-folder" data-i18n="common.browse">변경...</button>
+              </div>
+            </div>
+            <div class="adv-field">
+              <label data-i18n="composer.checksum">체크섬 검증 (SHA-256 / MD5)</label>
+              <input type="text" id="adv-hash" data-i18n-placeholder="composer.optional" placeholder="선택 사항" class="glass-input tabular" />
+            </div>
+            <div class="adv-field">
+              <label data-i18n="composer.referer">Referer 주소</label>
+              <input type="text" id="adv-referer" placeholder="https://example.com" class="glass-input tabular" />
+            </div>
+            <div class="adv-field">
+              <label data-i18n="composer.cookie">인증 Cookie 헤더</label>
+              <input type="text" id="adv-cookie" placeholder="session=..." class="glass-input tabular" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Workspace Split: Download List + Optional Detail Sheet -->
+      <div class="workspace-split">
+        <section class="tasks-Region" id="tasks-dropzone">
+          <div class="empty-state" id="empty-state">
+            <div class="empty-icon-ring">
+              <svg class="empty-svg"><use href="#ic-download"/></svg>
+            </div>
+            <h3 data-i18n="empty.title">다운로드 내역이 없습니다</h3>
+            <p data-i18n="empty.desc">
+              상단 입력창에 주소를 붙여넣거나 웹 브라우저에서 다운로드 링크를 클릭하면 자동으로 최적의 스레드로 분할하여 빠르게 내려받습니다.
+            </p>
+            <div class="empty-actions">
+              <button class="glass-btn primary-glow" id="btn-empty-start-bench">
+                <span data-i18n="empty.benchBtn">64MB 가속 테스트 실행</span>
+              </button>
+              <button class="glass-btn" id="btn-empty-open-browser">
+                <span data-i18n="empty.browserBtn">브라우저 연동 설정</span>
+              </button>
+            </div>
+          </div>
+          <div class="tasks-list" id="tasks-list"></div>
+        </section>
+
+        <!-- Right-side Detail Inspector Sheet -->
+        <aside class="inspector-drawer hidden" id="inspector-drawer">
+          <div class="inspector-header">
+            <div class="inspector-title-group">
+              <span class="inspector-tag" data-i18n="insp.details">상세 정보</span>
+              <h3 id="insp-filename" class="insp-filename">파일 정보</h3>
+            </div>
+            <button class="win-ctrl-btn win-ctrl-close" id="btn-close-inspector" title="닫기">
+              <svg class="win-ctrl-ic"><use href="#ic-win-close"/></svg>
+            </button>
+          </div>
+
+          <div class="insp-kpi-grid">
+            <div class="insp-kpi">
+              <span class="kpi-label" data-i18n="insp.speed">속도</span>
+              <span class="kpi-value tabular" id="insp-speed">0.00 MB/s</span>
+            </div>
+            <div class="insp-kpi">
+              <span class="kpi-label" data-i18n="insp.eta">남은 시간</span>
+              <span class="kpi-value tabular" id="insp-eta">--:--</span>
+            </div>
+            <div class="insp-kpi">
+              <span class="kpi-label" data-i18n="insp.segments">세그먼트</span>
+              <span class="kpi-value tabular" id="insp-segments-count">0 / 16</span>
+            </div>
+            <div class="insp-kpi">
+              <span class="kpi-label" data-i18n="insp.splits">동적 분할</span>
+              <span class="kpi-value tabular" id="insp-splits">0회</span>
+            </div>
+          </div>
+
+          <div class="insp-section">
+            <div class="sec-head">
+              <span data-i18n="insp.speedHistory">전송 속도 추이</span>
+              <span class="tabular sec-sub" id="insp-peak-avg">최고 0 MB/s</span>
+            </div>
+            <canvas id="insp-speed-canvas" width="340" height="68"></canvas>
+          </div>
+
+          <div class="insp-section">
+            <div class="sec-head">
+              <span data-i18n="insp.segProgress">세그먼트 진행도</span>
+              <span class="tabular sec-sub" id="insp-bytes-progress">0 B / 0 B</span>
+            </div>
+            <div class="byte-map-bar" id="insp-byte-map"></div>
+          </div>
+
+          <div class="insp-section insp-segments-wrap">
+            <div class="sec-head">
+              <span data-i18n="insp.threadState">스레드별 상태</span>
+              <span class="sec-sub tabular" id="insp-server-tag">HTTP 206</span>
+            </div>
+            <div class="insp-segments-list" id="insp-segments-list"></div>
+          </div>
+
+          <div class="insp-section" id="insp-hash-section">
+            <div class="sec-head">
+              <span data-i18n="insp.checksum">체크섬 (클릭하여 복사)</span>
+              <span class="hash-badge" id="insp-hash-badge">대기</span>
+            </div>
+            <div class="hash-row">
+              <span class="hash-key">SHA-256</span>
+              <code class="hash-val tabular" id="insp-sha256">-</code>
+            </div>
+            <div class="hash-row">
+              <span class="hash-key">MD5</span>
+              <code class="hash-val tabular" id="insp-md5">-</code>
+            </div>
+          </div>
+
+          <div class="insp-section insp-log-wrap">
+            <div class="sec-head">
+              <span data-i18n="insp.logs">로그</span>
+            </div>
+            <div class="insp-logs tabular" id="insp-logs"></div>
+          </div>
+        </aside>
+      </div>
+    </main>
+  </div>
+
+  <!-- MODAL 0: Browser Integration -->
+  <div class="modal-backdrop hidden" id="modal-browser">
+    <div class="modal-card modal-lg">
+      <div class="modal-header">
+        <h2 data-i18n="browser.title">브라우저 연동 및 다운로드 대화상자</h2>
+        <button class="win-ctrl-btn win-ctrl-close" data-close="modal-browser">
+          <svg class="win-ctrl-ic"><use href="#ic-win-close"/></svg>
+        </button>
+      </div>
+      <p class="modal-desc" data-i18n="browser.desc">
+        평소에는 화면에 위젯을 띄워두지 않으며, 웹 브라우저에서 다운로드 링크를 클릭할 때만 깔끔한 다운로드 추가 창이 열립니다.
+      </p>
+
+      <div class="browser-grid">
+        <div class="browser-card">
+          <div class="preset-top">
+            <span class="preset-badge highlight" data-i18n="browser.extBadge">확장프로그램</span>
+            <span class="preset-size tabular" id="ext-intercept-count">연동 0건</span>
+          </div>
+          <h4 data-i18n="browser.extTitle">브라우저 확장프로그램 설치</h4>
+          <p data-i18n="browser.extDesc">웹페이지에서 다운로드 링크를 클릭하면 Loadin의 새로운 다운로드 대화상자가 자동으로 나타나 파일 크기와 사양 맞춤 스레드를 안내합니다.</p>
+          <ol class="install-steps">
+            <li data-i18n="browser.step1">아래 [확장프로그램 폴더 열기]를 클릭합니다.</li>
+            <li data-i18n="browser.step2">아래 주소 복사 버튼을 눌러 브라우저 주소창에 붙여넣고 개발자 모드를 켭니다.</li>
+            <li data-i18n="browser.step3">[압축해제된 확장 프로그램을 로드합니다]를 클릭해 열린 browser-extension 폴더를 선택합니다.</li>
+          </ol>
+
+          <!-- One-click copy buttons for all major browsers -->
+          <div class="ext-url-copy-grid">
+            <button type="button" class="ext-copy-btn" id="btn-copy-chrome-ext" data-ext-url="chrome://extensions" title="클릭하여 Chrome 확장프로그램 주소 복사">
+              <span>chrome://extensions</span>
+              <span class="ext-copy-tag" data-i18n="common.copy">복사</span>
+            </button>
+            <button type="button" class="ext-copy-btn" id="btn-copy-edge-ext" data-ext-url="edge://extensions" title="클릭하여 Edge 확장프로그램 주소 복사">
+              <span>edge://extensions</span>
+              <span class="ext-copy-tag" data-i18n="common.copy">복사</span>
+            </button>
+            <button type="button" class="ext-copy-btn" data-ext-url="whale://extensions" title="클릭하여 네이버 웨일 확장프로그램 주소 복사">
+              <span>whale://extensions</span>
+              <span class="ext-copy-tag" data-i18n="common.copy">복사</span>
+            </button>
+            <button type="button" class="ext-copy-btn" data-ext-url="brave://extensions" title="클릭하여 Brave 확장프로그램 주소 복사">
+              <span>brave://extensions</span>
+              <span class="ext-copy-tag" data-i18n="common.copy">복사</span>
+            </button>
+            <button type="button" class="ext-copy-btn" data-ext-url="opera://extensions" title="클릭하여 Opera 확장프로그램 주소 복사">
+              <span>opera://extensions</span>
+              <span class="ext-copy-tag" data-i18n="common.copy">복사</span>
+            </button>
+            <button type="button" class="ext-copy-btn" data-ext-url="about:debugging#/runtime/this-firefox" title="클릭하여 Firefox 부가기능 디버깅 주소 복사 (firefox 폴더의 manifest.json 선택)">
+              <span>Firefox (about:debugging)</span>
+              <span class="ext-copy-tag" data-i18n="common.copy">복사</span>
+            </button>
+          </div>
+
+          <div class="browser-card-actions" style="margin-top:4px">
+            <button class="glass-btn primary-glow w-full" id="btn-open-ext-folder" data-i18n="browser.openExtFolder">
+              확장프로그램 폴더 열기
+            </button>
+          </div>
+        </div>
+
+        <div class="browser-card">
+          <div class="preset-top">
+            <span class="preset-badge" data-i18n="browser.sysBadge">시스템 연동</span>
+            <span class="preset-size tabular" id="proto-status-text">확인 중</span>
+          </div>
+          <h4 data-i18n="browser.sysTitle">다운로드 대화상자 & 프로토콜 등록</h4>
+          <p data-i18n="browser.sysDesc">독립형 다운로드 대화상자를 바로 열어보거나, 브라우저에서 Loadin을 직접 호출할 수 있도록 시스템 프로토콜을 등록합니다.</p>
+
+          <div class="proto-box" style="display:flex;flex-direction:column;gap:8px">
+            <button class="glass-btn primary-glow w-full" id="btn-modal-launch-hover" data-i18n="browser.openNewDialog">
+              새 다운로드 대화상자 열기
+            </button>
+            <button class="glass-btn w-full" id="btn-register-protocol" data-i18n="browser.registerProtocol">
+              loadin:// 시스템 프로토콜 등록
+            </button>
+          </div>
+
+          <div class="bookmarklet-box">
+            <span class="bm-label" data-i18n="browser.bookmarkletLabel">북마크바에 끌어다 놓아 사용할 수 있는 북마클릿:</span>
+            <div class="bm-row">
+              <a
+                class="glass-btn bm-link"
+                id="bookmarklet-anchor"
+                href="javascript:(function(){var u=window.getSelection().toString().trim()||location.href;window.open('http://127.0.0.1:17890/api/browser/add?url='+encodeURIComponent(u)+'&referer='+encodeURIComponent(location.href),'_blank','width=420,height=220');})();"
+                onclick="event.preventDefault(); showToast('이 버튼을 브라우저 북마크바로 드래그하세요.');"
+                data-i18n="browser.bookmarkletBtn"
+              >Loadin으로 다운로드</a>
+              <button class="glass-btn btn-sm" id="btn-copy-bookmarklet" data-i18n="common.copy">복사</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 1: Benchmark Presets -->
+  <div class="modal-backdrop hidden" id="modal-benchmark">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 data-i18n="bench.title">분할 가속 테스트</h2>
+        <button class="win-ctrl-btn win-ctrl-close" data-close="modal-benchmark">
+          <svg class="win-ctrl-ic"><use href="#ic-win-close"/></svg>
+        </button>
+      </div>
+      <div class="preset-grid">
+        <div class="preset-card">
+          <div class="preset-top">
+            <span class="preset-badge highlight">Standard</span>
+            <span class="preset-size tabular">64 MB</span>
+          </div>
+          <h4 data-i18n="bench.card1Title">동적 세그먼트 분할 시뮬레이션</h4>
+          <p data-i18n="bench.card1Desc">먼저 완료된 스레드가 느린 스레드의 남은 구간을 절반으로 나누어 이어받는 과정을 확인합니다.</p>
+          <button class="glass-btn primary-glow w-full" data-bench="sandbox-64" data-i18n="bench.card1Btn">64MB 테스트 시작</button>
+        </div>
+
+        <div class="preset-card">
+          <div class="preset-top">
+            <span class="preset-badge">Stress</span>
+            <span class="preset-size tabular">256 MB</span>
+          </div>
+          <h4 data-i18n="bench.card2Title">32-스레드 대용량 스트림</h4>
+          <p data-i18n="bench.card2Desc">32개 병렬 연결과 실시간 SHA-256 무결성 검증 처리 속도를 측정합니다.</p>
+          <button class="glass-btn w-full" data-bench="sandbox-256" data-i18n="bench.card2Btn">256MB 테스트 시작</button>
+        </div>
+
+        <div class="preset-card">
+          <div class="preset-top">
+            <span class="preset-badge">CDN #1</span>
+            <span class="preset-size tabular">78.1 MB</span>
+          </div>
+          <h4 data-i18n="bench.card3Title">컴파일러 SDK 아카이브 (.zip)</h4>
+          <p data-i18n="bench.card3Desc">글로벌 CDN 서버에서 실제 대용량 압축 파일을 멀티 스레드로 내려받습니다.</p>
+          <button class="glass-btn w-full" data-bench="external-sdk" data-i18n="bench.card3Btn">78MB 파일 다운로드</button>
+        </div>
+
+        <div class="preset-card">
+          <div class="preset-top">
+            <span class="preset-badge">CDN #2</span>
+            <span class="preset-size tabular">55.4 MB</span>
+          </div>
+          <h4 data-i18n="bench.card4Title">포터블 패키지 아카이브 (.7z.exe)</h4>
+          <p data-i18n="bench.card4Desc">외부 릴리즈 서버에서 리다이렉트 추적 및 병렬 다운로드를 수행합니다.</p>
+          <button class="glass-btn w-full" data-bench="external-pkg" data-i18n="bench.card4Btn">55MB 파일 다운로드</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: Webpage Link Sniffer -->
+  <div class="modal-backdrop hidden" id="modal-sniffer">
+    <div class="modal-card modal-lg">
+      <div class="modal-header">
+        <h2 data-i18n="sniffer.title">웹페이지 링크 스캔</h2>
+        <button class="win-ctrl-btn win-ctrl-close" data-close="modal-sniffer">
+          <svg class="win-ctrl-ic"><use href="#ic-win-close"/></svg>
+        </button>
+      </div>
+      <div class="sniffer-bar">
+        <input type="url" id="sniffer-url-input" class="glass-input" data-i18n-placeholder="sniffer.placeholder" placeholder="스캔할 웹페이지 주소 입력..." />
+        <button class="glass-btn primary-glow" id="btn-run-sniffer" data-i18n="sniffer.scanBtn">스캔</button>
+      </div>
+      <div class="sniffer-filter-bar">
+        <div class="sniffer-chips">
+          <button class="chip active" data-sfilter="all" data-i18n="nav.all">전체 항목</button>
+          <button class="chip" data-sfilter="compressed" data-i18n="nav.compressed">압축 파일</button>
+          <button class="chip" data-sfilter="programs" data-i18n="nav.programs">프로그램</button>
+          <button class="chip" data-sfilter="videos" data-i18n="nav.videos">동영상</button>
+          <button class="chip" data-sfilter="documents" data-i18n="nav.documents">문서</button>
+        </div>
+        <div class="sniffer-select-btns">
+          <button class="glass-btn btn-sm" id="btn-sniff-select-all" data-i18n="sniffer.selectAll">전체 선택</button>
+          <button class="glass-btn btn-sm" id="btn-sniff-deselect-all" data-i18n="sniffer.deselectAll">선택 해제</button>
+        </div>
+      </div>
+      <div class="sniffer-results" id="sniffer-results">
+        <div class="sniffer-placeholder" data-i18n="sniffer.emptyHint">웹페이지 주소를 입력하고 [스캔]을 클릭하세요.</div>
+      </div>
+      <div class="modal-footer">
+        <span class="tabular" id="sniffer-selected-count">0개 선택됨</span>
+        <button class="glass-btn primary-glow" id="btn-sniff-download-selected" data-i18n="sniffer.downloadSelected">선택 항목 다운로드</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 3: Batch Downloader -->
+  <div class="modal-backdrop hidden" id="modal-batch">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 data-i18n="batch.title">일괄 다운로드 추가</h2>
+        <button class="win-ctrl-btn win-ctrl-close" data-close="modal-batch">
+          <svg class="win-ctrl-ic"><use href="#ic-win-close"/></svg>
+        </button>
+      </div>
+      <p class="modal-desc" data-i18n="batch.desc">
+        여러 개의 주소를 줄바꿈으로 입력하거나 범위 패턴(예: https://example.com/file_[01-10].zip)을 입력하세요.
+      </p>
+      <div class="batch-form">
+        <textarea id="batch-urls-input" class="glass-textarea tabular" rows="6" placeholder="https://example.com/archive_[01-05].zip"></textarea>
+        <div class="batch-options-row">
+          <div>
+            <label style="font-size:13px;color:var(--text-secondary);margin-right:8px" data-i18n="composer.parallelThreads">병렬 스레드</label>
+            <select id="batch-connections" class="glass-select-sm">
+              <option value="8">8</option>
+              <option value="16" selected>16</option>
+              <option value="24">24</option>
+              <option value="32">32</option>
+            </select>
+          </div>
+          <button class="glass-btn primary-glow" id="btn-submit-batch" data-i18n="batch.addAll">모두 추가</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 4: Engine Settings -->
+  <div class="modal-backdrop hidden" id="modal-settings">
+    <div class="modal-card modal-lg">
+      <div class="modal-header">
+        <h2 data-i18n="settings.title">환경설정</h2>
+        <button class="win-ctrl-btn win-ctrl-close" data-close="modal-settings">
+          <svg class="win-ctrl-ic"><use href="#ic-win-close"/></svg>
+        </button>
+      </div>
+      <div class="settings-form">
+        <!-- Section 1: Storage & Engine -->
+        <div class="settings-section-label" data-i18n="settings.secStorage">저장 위치 및 가속 엔진</div>
+
+        <div class="setting-row-folder">
+          <div class="setting-folder-top">
+            <div class="setting-info">
+              <h4 data-i18n="settings.saveDirTitle">기본 저장 위치</h4>
+              <p data-i18n="settings.saveDirDesc">다운로드한 파일이 저장될 기본 폴더 경로</p>
+            </div>
+            <div class="setting-folder-actions">
+              <button type="button" class="glass-btn btn-sm primary-glow" id="btn-set-pick-folder">
+                <svg class="svg-ic-sm"><use href="#ic-folder"/></svg>
+                <span data-i18n="settings.pickFolder">폴더 변경...</span>
+              </button>
+              <button type="button" class="glass-btn btn-sm" id="btn-set-open-folder" data-i18n="telemetry.openFolder">폴더 열기</button>
+              <button type="button" class="glass-btn btn-sm" id="btn-set-reset-folder" data-i18n="settings.resetFolder">기본값</button>
+            </div>
+          </div>
+          <div class="folder-path-box">
+            <svg class="svg-ic url-lead-icon"><use href="#ic-folder"/></svg>
+            <input type="text" id="set-savedir" class="tabular" spellcheck="false" />
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <h4 data-i18n="settings.hwRecTitle">사양 맞춤 권장 스레드</h4>
+            <p id="set-hw-summary">시스템 사양 분석 중...</p>
+          </div>
+          <button type="button" class="glass-btn btn-sm primary-glow" id="btn-set-apply-hw" data-i18n="composer.applyRecommended">
+            권장값 적용
+          </button>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <h4 data-i18n="settings.connTitle">기본 스레드 수 (1 ~ 32)</h4>
+            <p data-i18n="settings.connDesc">파일당 분할 연결 개수</p>
+          </div>
+          <input type="number" id="set-connections" class="glass-input tabular w-24" min="1" max="32" value="16" />
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <h4 data-i18n="settings.concurrentTitle">동시 다운로드 작업 수 (1 ~ 16)</h4>
+            <p data-i18n="settings.concurrentDesc">한 번에 동시에 내려받을 최대 파일 수</p>
+          </div>
+          <input type="number" id="set-concurrent" class="glass-input tabular w-24" min="1" max="16" value="4" />
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <h4 data-i18n="telemetry.speedLimit">전역 속도 제한</h4>
+            <p data-i18n="settings.speedLimitDesc">전체 다운로드 대역폭 상한 설정</p>
+          </div>
+          <select id="set-speed-limit" class="glass-select-sm">
+            <option value="0" data-i18n="telemetry.unlimited">무제한</option>
+            <option value="52428800">50 MB/s</option>
+            <option value="20971520">20 MB/s</option>
+            <option value="10485760">10 MB/s</option>
+            <option value="5242880">5 MB/s</option>
+            <option value="1048576">1 MB/s</option>
+          </select>
+        </div>
+
+        <!-- Section 2: Appearance & Language -->
+        <div class="settings-section-label" data-i18n="settings.secAppearance">화면 및 언어</div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <h4 data-i18n="settings.themeTitle">화면 테마</h4>
+            <p data-i18n="settings.themeDesc">블랙 또는 화이트 모드 선택 (재실행 후에도 유지됨)</p>
+          </div>
+          <select id="set-theme" class="glass-select-sm">
+            <option value="black" data-i18n="theme.black">블랙 (Black)</option>
+            <option value="white" data-i18n="theme.white">화이트 (White)</option>
+          </select>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <h4 data-i18n="settings.langTitle">언어 (Language)</h4>
+            <p data-i18n="settings.langDesc">인터페이스 및 다운로드 대화상자 표시 언어</p>
+          </div>
+          <select id="set-language" class="glass-select-sm">
+            <option value="ko">한국어 (Korean)</option>
+            <option value="en">English</option>
+            <option value="ja">日本語 (Japanese)</option>
+          </select>
+        </div>
+
+        <!-- Section 3: System & Automation -->
+        <div class="settings-section-label" data-i18n="settings.secAutomation">시스템 연동 및 자동화</div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <h4 data-i18n="settings.startupTitle">윈도우 시작 시 자동 실행</h4>
+            <p data-i18n="settings.startupDesc">로그인 시 백그라운드 엔진을 자동으로 시작하여 브라우저 연동을 즉시 대기</p>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="set-startup" />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <h4 data-i18n="settings.browserInterceptTitle">브라우저 다운로드 자동 연동</h4>
+            <p data-i18n="settings.browserInterceptDesc">확장프로그램에서 다운로드 링크 클릭 시 Loadin 추가 창 자동 표시</p>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="set-browser-intercept" checked />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <h4 data-i18n="settings.autoCatTitle">카테고리별 하위 폴더 자동 분류</h4>
+            <p data-i18n="settings.autoCatDesc">파일 종류(압축/프로그램/동영상 등)에 따라 하위 폴더별로 자동 정리</p>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="set-autocat" checked />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <h4 data-i18n="settings.clipboardTitle">클립보드 주소 자동 감지</h4>
+            <p data-i18n="settings.clipboardDesc">다운로드 주소 복사 시 상단 빠른 다운로드 배너 표시</p>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="set-clipboard" checked />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <h4 data-i18n="settings.soundTitle">완료 효과음</h4>
+            <p data-i18n="settings.soundDesc">다운로드 완료 시 알림음 재생</p>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="set-sound" checked />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="modal-footer-between">
+        <button type="button" class="glass-btn btn-sm btn-danger-subtle" id="btn-quit-app" data-i18n="settings.quitApp">
+          프로그램 완전 종료
+        </button>
+        <div class="modal-footer-right">
+          <button type="button" class="glass-btn" data-close="modal-settings" data-i18n="common.cancel">취소</button>
+          <button type="button" class="glass-btn primary-glow" id="btn-save-settings" data-i18n="common.save">저장</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom Native-Style App Context Menu (Replaces Browser Right-Click Menu) -->
+  <div class="app-context-menu hidden" id="app-context-menu"></div>
+
+  <div class="toast-container" id="toast-container"></div>
+  <script src="/app.js"></script>
+</body>
+</html>

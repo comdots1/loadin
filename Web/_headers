@@ -1,0 +1,48 @@
+# Cloudflare Pages Headers Configuration
+
+# Global Security Headers
+/*
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+
+# Static Assets Caching (CSS, JS, Images, Fonts)
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Favicon and Root Icons
+/favicon.*
+  Cache-Control: public, max-age=604800
+
+# Executable Downloads - Force Direct Attachment Download
+/downloads/LoadinSetup.exe
+  Content-Type: application/octet-stream
+  Content-Disposition: attachment; filename="LoadinSetup.exe"
+  Cache-Control: public, max-age=86400
+
+/downloads/Loadin.exe
+  Content-Type: application/octet-stream
+  Content-Disposition: attachment; filename="Loadin.exe"
+  Cache-Control: public, max-age=86400
+
+/downloads/Loadin-macOS.zip
+  Content-Type: application/zip
+  Content-Disposition: attachment; filename="Loadin-macOS.zip"
+  Cache-Control: public, max-age=86400
+
+/downloads/Loadin_darwin_arm64
+  Content-Type: application/octet-stream
+  Content-Disposition: attachment; filename="Loadin_darwin_arm64"
+  Cache-Control: public, max-age=86400
+
+/downloads/Loadin_darwin_amd64
+  Content-Type: application/octet-stream
+  Content-Disposition: attachment; filename="Loadin_darwin_amd64"
+  Cache-Control: public, max-age=86400
+
+/downloads/loadin-extension.zip
+  Content-Type: application/zip
+  Content-Disposition: attachment; filename="loadin-extension.zip"
+  Cache-Control: public, max-age=86400
